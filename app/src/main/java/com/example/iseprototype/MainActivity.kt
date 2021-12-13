@@ -26,11 +26,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupPermissions() // For API level >= 23
         codeScanner()
+        Repository.initialize(this)
     }
 
 
     private fun codeScanner() {
-        var dosageText = findViewById<TextView>(R.id.dosage_text)
+        val dosageText = findViewById<TextView>(R.id.dosage_text)
         codeScanner = CodeScanner(this, findViewById(R.id.scanner_view)) // lite oklart
 
         codeScanner.apply {
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
             decodeCallback = DecodeCallback {
                 runOnUiThread { // lite miffo-vibbar av det här
-                    dosageText.text = it.text
+                    dosageText.text = DosageCalculator().calculateDosagesForCode(it.text)
                 }
             }
 

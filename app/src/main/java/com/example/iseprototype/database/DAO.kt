@@ -13,5 +13,6 @@ interface DAO {
     @Query("SELECT * FROM substitute")
     fun getSubstitutes(): List<Substitute>
 
-
+    @Query("SELECT substitute FROM substitute WHERE original=(:original)")
+    fun getSubstitutesFor(original: String): List<String>
 }
